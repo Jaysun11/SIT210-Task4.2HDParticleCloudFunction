@@ -1,0 +1,88 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<form method="post" action="/Tests/Post/">
+  <fieldset>
+    <legend>Select a colour to change the light</legend>
+    <input type="checkbox" name="colourboxes" value="red">Red<br>
+    <input type="checkbox" name="colourboxes" value="green">Green<br>
+    <input type="checkbox" name="colourboxes" value="blue">Blue<br>
+    <br>
+    <input type="button" value="Send" onclick="sendLight();"/>
+  </fieldset>
+</form>
+
+<script type="text/javascript">
+  function sendLight()
+  {
+    var checks = document.getElementsByName("colourboxes");
+    var numChecked = 0;
+    for(var i = 0; i < checks.length; i++)
+    {
+      if(checks[i].checked)
+      numChecked++;
+    }
+    if(numChecked > 1)
+    {
+      alert("Please only select one colour");
+      return false;
+    } else {
+
+      if(checks[0].checked){
+        //red
+
+        $.ajax({
+          type: "POST",
+          url: "https://api.particle.io/v1/devices/e00fce68e0b08bcb6c27e2ba/triggerLights?access_token=0b4d9095da0530ffb5e0eecc7289298c8b4ee19c",
+          data: JSON.stringify({"args": "red"}),
+          contentType: "application/json",
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (result, status) {
+            console.log(result);
+          }
+        });
+
+        alert("Red Sent");
+      } else if(checks[1].checked){
+        //Green
+
+
+        $.ajax({
+          type: "POST",
+          url: "https://api.particle.io/v1/devices/e00fce68e0b08bcb6c27e2ba/triggerLights?access_token=0b4d9095da0530ffb5e0eecc7289298c8b4ee19c",
+          data: JSON.stringify({"args": "green"}),
+          contentType: "application/json",
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (result, status) {
+            console.log(result);
+          }
+        });
+
+        alert("Green Sent");
+      } else if(checks[2].checked){
+        //Blue
+        $.ajax({
+          type: "POST",
+          url: "https://api.particle.io/v1/devices/e00fce68e0b08bcb6c27e2ba/triggerLights?access_token=0b4d9095da0530ffb5e0eecc7289298c8b4ee19c",
+          data: JSON.stringify({"args": "blue"}),
+          contentType: "application/json",
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (result, status) {
+            console.log(result);
+          }
+        });
+
+        alert("Blue Sent");
+
+      }
+
+    }
+  }
+</script>
